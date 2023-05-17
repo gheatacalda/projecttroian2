@@ -25,7 +25,7 @@ int main()
 	fflush(stdout);
 	scanf("%d", &user.an_nastere);
 
-	int optiune, i=1;
+	int optiune, i=1, j=1;
 	char genurimuzica[20][20];
 
 	FILE *f1, *f2, *f3;
@@ -64,29 +64,74 @@ int main()
 	fflush(stdout);
 	scanf("%d", &optiune);
 
-	char artisti[100][100];
-	i=1;
+	char artisti[50][50][50];
+	i=1, j=1;
 
-	while(fgets(artisti[i], 100, f2)!=NULL)
-					     i++;
+	for(i=1;i<n;i++)
+		for(j=1;j<6;j++)
+			    fscanf(f2, "%s", artisti[i][j]);
 
 	printf("\nBazat pe alegerea dumneavoastra ar trebui sa ascultati urmatorii artisti: ");
 	for(i=1;i<n;i++)
-		{ if(i==optiune)
-		    printf("%s", artisti[i]);
-		}
+		for(j=1;j<6;j++)
+		        if(i==optiune)
+		           printf("%s ", artisti[i][j]);
 
-	long int *asc_lun;
+	long int asc_lun[50][50];
 	i=1;
+	long int asclunmax;
+	char mostpopular[50];
 
-	asc_lun=(long int*)malloc(30*sizeof(long int));
+				for(i=1;i<n;i++)
+					if(i==optiune)
+				       asclunmax=asc_lun[i][1];
+
+				for(i=1;i<n;i++)
+					for(j=1;j<6;j++)
+					   fscanf(f3, "%ld", &asc_lun[i][j]);
+
+				for(i=1;i<n;i++)
+				   for(j=1;j<6;j++)
+					    if(i==optiune)
+					       if(asc_lun[i][j]>asclunmax)
+					    	   {  asclunmax=asc_lun[i][j];
+					    	      strcpy(mostpopular, artisti[i][j]);
+					    	   }
+	printf("\nCel mai popular artist din aceasta categorie este: %s.", mostpopular);
+
+	int k;
+	i=1;
+        //nu merge sortarea asta
 	for(i=1;i<n;i++)
-		fscanf(f3,"%ld", (asc_lun+i));
+	    for(j=1;j<6;j++)
+	    	for(k=1;k<6;k++)
+	    	     if(i==optiune)
+	    	       {  if(asc_lun[i][j]>asc_lun[i][k])
+	    		        {
+	    			         char aux[50][50];
+	    			         strcpy(aux[50],artisti[i][k]);
+	    			         strcpy(artisti[i][k],artisti[i][j]);
+	    			         strcpy(artisti[i][j],aux[50]);
+	    		         }
+	    	        }
+
+	printf("\nArtistii de la aceasta categorie ordonati dupa popularitate: ");
+	for(i=1;i<n;i++)
+		for(j=1;j<6;j++)
+	        printf("%s ",artisti[i][j]);
+
+	long int medie;
+	long int suma=0;
 
 	for(i=1;i<n;i++)
-	  { if(optiune==i)
-		  printf("%ld", *(asc_lun+i));
-	  }
+		for(j=1;j<6;j++)
+			if(i==optiune)
+				suma+=asc_lun[i][j];
+
+	medie=suma/5;
+
+	printf("\nMedia ascultatorilor lunar al genului de muzica pe care l-ati ales este: %ld", medie);
+
 
 	fclose(f1);
 	fclose(f2);
