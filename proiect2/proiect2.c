@@ -7,12 +7,21 @@ struct utilizator
 		char nume[30], prenume[30];
 		int an_nastere;
 	};
-int varsta(int an_nastere)
+int varstacalcul(int an_nastere)
 {
 	int an_curent=2023;
-	return an_curent-an_nastere;
+	int varsta=an_curent-an_nastere;
+	return varsta;
 }
-
+int acces(int varsta)
+{
+	if(varsta<14)
+	{
+		printf("Aveti o varsta nepotrivita pentru recomandarile de muzica!");
+		return 1;
+	}
+	return 0;
+}
 int main()
 {
 	struct utilizator user;
@@ -24,7 +33,14 @@ int main()
 	printf("Introduceti anul nasterii: ");
 	fflush(stdout);
 	scanf("%d", &user.an_nastere);
+        
+	varstacalcul(user.an_nastere);
+	user.varsta=varstacalcul(user.an_nastere);
+        if( acces(user.varsta)==1)
+             { return 1;
 
+              }
+	
 	int optiune, i=1, j=1;
 	char genurimuzica[20][20];
 
