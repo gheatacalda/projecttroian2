@@ -99,26 +99,23 @@ int main()
 					    	   }
 	printf("\nCel mai popular artist din aceasta categorie este: %s.", mostpopular);
 
-	int k;
 	i=1;
-        //nu merge sortarea asta
-	for(i=1;i<n;i++)
-	    for(j=1;j<6;j++)
-	    	for(k=1;k<6;k++)
-	    	     if(i==optiune)
-	    	       {  if(asc_lun[i][j]>asc_lun[i][k])
-	    		        {
-	    			         char aux[50][50];
-	    			         strcpy(aux[50],artisti[i][k]);
-	    			         strcpy(artisti[i][k],artisti[i][j]);
-	    			         strcpy(artisti[i][j],aux[50]);
-	    		         }
-	    	        }
 
-	printf("\nArtistii de la aceasta categorie ordonati dupa popularitate: ");
+	for(int k=1; k< n; k++)
+	   for (i = 1; i < 6; i++)
+	     for (j = 1; j < 6; j++)
+	    	      if (asc_lun[k][i] > asc_lun[k][j])
+	               { char aux[50];
+	                 strcpy(aux,artisti[k][j]);
+	                 strcpy(artisti[k][j],artisti[k][i]);
+	                 strcpy(artisti[k][i],aux);
+	               }
+
+	printf("\nArtistii de la aceasta categorie ordonati dupa popularitate: \n");
 	for(i=1;i<n;i++)
-		for(j=1;j<6;j++)
-	        printf("%s ",artisti[i][j]);
+		 for(j=1;j<6;j++)
+			 if(i==optiune)
+	            printf("%s ",artisti[i][j]);
 
 	long int medie;
 	long int suma=0;
